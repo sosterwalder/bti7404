@@ -10,4 +10,4 @@ clean:
     fi
  
 up: clean all
-	p2pmpirun -l xferfiles -n 4 MST
+	p2pmpirun -l xferfiles -n 8 MST

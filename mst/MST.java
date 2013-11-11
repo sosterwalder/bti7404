@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import p2pmpi.mpi.MPI;
 import p2pmpi.mpi.Request;
@@ -45,8 +46,6 @@ public class MST {
 	static final int IS_CANDIDATE=0;
 	static final int IS_LEADER=1;	
 	
-	// nb. of processes (i.e nodes of the graph) 
-	static final int N = 4;
 	// our graph:   
 	//         [0]    [1]             [2]    
 	//        /  |   /    \          /  |
@@ -83,10 +82,14 @@ public class MST {
 	//		   [5]
 	
 	static final E incList[][] = {
-		{new E(0,2,6),new E(0,1,16)},  					// 0
-		{new E(1,2,7),new E(1,0,16), new E(1,3,1)}, 	// 1
-		{new E(2,0,6),new E(2,1,7), new E(2, 3, 14)},  	// 2
-		{new E(3,1,1),new E(3,2,14)},  					// 3
+		{new E(0,2,6),new E(0,1,16)},  														// 0
+		{new E(1,2,7),new E(1,0,16), new E(1,3,1)}, 										// 1
+		{new E(2,0,6),new E(2,1,7), new E(2, 3, 14),new E(2,4,8),new E(2,6,20)},  			// 2
+		{new E(3,1,1),new E(3,2,14),new E(3,4,9),new E(3,5,3)},  							// 3
+		{new E(4,3,9),new E(4,2,8),new E(4,5,2),new E(4,7,18)},								// 4
+		{new E(5,3,3),new E(5,4,2)},  														// 5
+		{new E(6,2,20),new E(6,7,17)},  													// 6
+		{new E(7,4,18),new E(7,6,17)}  														// 7
 		
 		/*
 		{new E(1,4,2),new E(1,6,10)},  		// 1
@@ -107,9 +110,6 @@ public class MST {
 	
 	public static int findLeader() throws Exception {
 		int currentLeader = rank;
-		boolean isConnected = false;
-		E incomingEdge = null;
-		E outgoingEdge = null;
 		
 		// we find our neighbors in incList:
 		int deg = neighbors.length;
@@ -180,16 +180,11 @@ public class MST {
 			// Poll all neighbors:
 			for (int nb = 0; nb < deg; nb++) {				
 				if (!hasGotMsg[nb]) {
-					//System.out.println(rank + ": Polling neighbour " + neighbors[nb].to);
 					if (reqs[nb].Test() != null) {
 						System.out.println(rank + ": Got response from neighbour " + neighbors[nb].to);
-						System.out.println(rank + ": " + recBuf[nb].toString());
+						//System.out.println(rank + ": " + recBuf[nb].toString());
 						hasGotMsg[nb] = true;
 						m++;
-						if (recBuf[nb].edge.to == rank) {
-							isConnected = true;
-							incomingEdge = recBuf[nb].edge;
-						}
 					}
 				} else {
 					System.out.println(rank + ": Got response from neighbour " + neighbors[nb].to + " skipping");
@@ -210,7 +205,7 @@ public class MST {
 			
 			// Get connected neighbour
 			ArrayList<Integer> connectedNeighbours = new ArrayList<Integer>();
-			for (int nb = 0; nb < deg; nb++) {
+			for (int nb = 0; nb < deg; nb++) {				
 				if (hasGotMsg[nb]) {
 					if (	recBuf[nb].edge.to == rank ||
 							recBuf[nb].edge.from == rank
@@ -228,13 +223,15 @@ public class MST {
 				minimalWeightedEdge = Integer.MAX_VALUE;
 				
 				for (int nb = 0; nb < deg; nb++) {
-					if (neighbors[nb].weight < minimalWeight) {
-						minimalWeight = neighbors[nb].weight;
-						minimalWeightedEdge = nb;
+					if (nb != connectedNeighbours.get(0)) {
+						if (neighbors[nb].weight < minimalWeight) {
+							minimalWeight = neighbors[nb].weight;
+							minimalWeightedEdge = nb;
+						}
 					}
 				}
 				
-				if (!connectedNeighbours.contains(minimalWeightedEdge)) {
+				if (minimalWeightedEdge < connectedNeighbours.get(0)) {
 					System.out.println(rank + ": Added new edge to MST: " + neighbors[minimalWeightedEdge].to);
 					
 					for (int nb = 0; nb < deg; nb++) {
@@ -254,7 +251,7 @@ public class MST {
 					} 
 					
 				} else {
-					System.out.println(rank + ": No new edges found, found is already connected");
+					System.out.println(rank + ": No new edges found, found " +neighbors[minimalWeightedEdge].toString() + " is already connected");
 					
 					for (int nb = 0; nb < deg; nb++) {
 						System.out.println(rank + ": Sending already connected edge " + sendBuf[nb].edge.toString() + " to neighbour {" + neighbors[nb].to + "}" );
@@ -266,7 +263,7 @@ public class MST {
 							neighbors[nb].to, // Destination
 							0
 						);
-					} 
+					}
 				}
 			} else {
 				System.out.println(rank + ": No new edges found");
@@ -281,7 +278,7 @@ public class MST {
 						0
 					);
 				} 
-			}
+			}		
 		} else {
 			// We have got a message from at least one neighbor
 			System.out.println(rank + ": Message from at least one neighbour remaining");
@@ -309,17 +306,18 @@ public class MST {
 			do{ 
 				if (reqs[missingNb].Test()!=null){
 					m = m + 1;
-					// Determine shortest edge from either current rank or connected neighbour
 					
 					// Get connected neighbour
 					ArrayList<Integer> connectedNeighbours = new ArrayList<Integer>();
 					for (int nb = 0; nb < deg; nb++) {
+						System.out.println(rank + ": Checking NB: " + nb);
 						if (hasGotMsg[nb]) {
 							if (	recBuf[nb].edge.to == rank ||
 									recBuf[nb].edge.from == rank
 								) {
 								connectedNeighbours.add(nb);
 							}
+
 						}
 					}
 					
@@ -331,7 +329,6 @@ public class MST {
 						minimalWeightedEdge = Integer.MAX_VALUE;
 						
 						for (int nb = 0; nb < deg; nb++) {
-							System.out.println(rank + ": Testing " + nb);
 							if (nb != connectedNeighbours.get(0)) {
 								if (neighbors[nb].weight < minimalWeight) {
 									minimalWeight = neighbors[nb].weight;
@@ -339,7 +336,6 @@ public class MST {
 								}
 							}
 						}
-						System.out.println(rank + ": Minimal " + minimalWeightedEdge);
 						
 						if (minimalWeightedEdge < connectedNeighbours.get(0)) {
 							System.out.println(rank + ": Added new edge to MST: " + neighbors[minimalWeightedEdge].to);
@@ -414,8 +410,8 @@ public class MST {
 		rank = MPI.COMM_WORLD.Rank();
 		neighbors = incList[rank]; // our neighbors in the tree graph
 		
-		if (size != N) {
-			System.out.println("run with -n "+N);
+		if (size != incList.length) {
+			System.out.println("run with -n "+ incList.length);
 		}
 		else {
 			int leader = findLeader();

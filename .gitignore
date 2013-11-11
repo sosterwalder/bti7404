@@ -1,3 +1,7 @@
+# Log files
+output
+output.txt
+
 *.class
 
 # Package Files #
