@@ -8,3 +8,8 @@ output.txt
 *.jar
 *.war
 *.ear
+
+*.classpath
+*.dblite
+*.project
+*.swp
