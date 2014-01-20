@@ -16,3 +16,18 @@ clean:
  
 up: clean all
 	p2pmpirun -l bin/xferfiles -n 4 $(main_class)
+
+mpiboot:
+	runSuperNode
+	sleep 1
+	mpiboot
+
+mpihalt:
+	mpihalt
+	sleep 1
+	stopSuperNode
+
+mpirestart:
+	mpihalt
+	sleep 2
+	mpiboot
