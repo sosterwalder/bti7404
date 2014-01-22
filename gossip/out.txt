@@ -1,175 +1,154 @@
-Removed file bin/test.jar
-jar cvf bin/test.jar -C build .
-added manifest
-adding: MainRunner.class(in = 5547) (out= 2872)(deflated 48%)
-adding: Utils.class(in = 1352) (out= 811)(deflated 40%)
-adding: QueryMessage.class(in = 1016) (out= 559)(deflated 44%)
-adding: LogRecord.class(in = 1557) (out= 800)(deflated 48%)
-adding: Frontend.class(in = 6615) (out= 3278)(deflated 50%)
-adding: GossipMessage.class(in = 1268) (out= 627)(deflated 50%)
-adding: ActionMessage.class(in = 1835) (out= 811)(deflated 55%)
-adding: Message.class(in = 193) (out= 160)(deflated 17%)
-adding: ActionMessage$Operation.class(in = 1096) (out= 590)(deflated 46%)
-adding: ReplicationManager.class(in = 11548) (out= 5721)(deflated 50%)
-p2pmpirun -l bin/xferfiles -n 4 MainRunner
 Searching nodes for a maximum of 6 seconds ...
 ** [Warning] Found only 2 host(s).
 **           Several processes will be executed on a same host.
-* Waiting reply from other nodes.. (listening on port 9835)
+* Waiting reply from other nodes.. (listening on port 9829)
 * got ACCEPT (FT 192.168.0.100:9898,key=1)
 * got ACCEPT (FT 192.168.0.100:9898,key=2)
 * got ACCEPT (FT 192.168.0.100:9898,key=3)
-* Requesting FT to transfer files ... [ test.jar ] ... done.
+* Requesting FT to transfer files ... [ gossip_simulation.jar ] ... done.
 * Waiting for processes to acknowledge file transfer ...
 * Wait for SYN message ...
->>>>-------------- EXCEPTION READING CFG! java.io.FileNotFoundException: /opt/p2pmpi/tmp/761165810953194--1/config.properties (No such file or directory)
+SYN:2:tcp://192.168.0.100:9814
 * Wait for SYN message ...
->>>>-------------- EXCEPTION READING CFG! java.io.FileNotFoundException: /opt/p2pmpi/tmp/761165810953194--2/config.properties (No such file or directory)
+SYN:1:tcp://192.168.0.100:9824
 * Wait for SYN message ...
->>>>-------------- EXCEPTION READING CFG! java.io.FileNotFoundException: /opt/p2pmpi/tmp/761165810953194--3/config.properties (No such file or directory)
-* Wait for SYN message ...
-SYN:1:tcp://192.168.0.100:9801
-* Wait for SYN message ...
-SYN:2:tcp://192.168.0.100:9848
-* Wait for SYN message ...
-SYN:3:tcp://192.168.0.100:9876
+SYN:3:tcp://192.168.0.100:9846
 * Check Receive all peers
 ============================================
 [Master of Rank 0]: IP = 192.168.0.100
-[Master of Rank 1]: IP = 192.168.0.100
 [Master of Rank 2]: IP = 192.168.0.100
+[Master of Rank 1]: IP = 192.168.0.100
 [Master of Rank 3]: IP = 192.168.0.100
 ============================================
 * Using protocol = DBRR
-* send SYN2: 192.168.0.100:9801
-* send SYN2: 192.168.0.100:9848
-* send SYN2: 192.168.0.100:9876
+* send SYN2: 192.168.0.100:9814
+* send SYN2: 192.168.0.100:9824
+* send SYN2: 192.168.0.100:9846
 * Create a gossip instance.
 * Program is executing ...
 INFO - RM 0: # of neighbours: 1
 INFO - RM 0: # of frontends: 2
 INFO - RM 0: Hej, this is RM 0
-INFO - RM 0: Set log-level to DEBUG
+INFO - RM 0: Set log-level to INFO
 INFO - RM 1: # of neighbours: 1
+INFO - FE 2: Hej, this is FE 2
+INFO - FE 2: Set log-level to INFO
+INFO - FE 3: Hej, this is FE 3
+INFO - FE 3: Set log-level to INFO
 INFO - RM 1: # of frontends: 2
 INFO - RM 1: Hej, this is RM 1
-INFO - RM 1: Set log-level to DEBUG
-INFO - FE 2: Hej, this is FE 2
-INFO - FE 2: Set log-level to DEBUG
-INFO - FE 3: Hej, this is FE 3
-INFO - FE 3: Set log-level to DEBUG
-INFO - RM 0: Sending gossip to RM 1
+INFO - RM 1: Set log-level to INFO
+INFO - RM 0: Sending gossip to RM 1. ReplicaTS: [1, 0]
 INFO - RM 1: Got gossip from RM 0
-DEBUG - RM 1: Merged time stamp from RM 0: [1, 0]
-INFO - RM 1: Sending gossip to RM 0
+INFO - RM 0: Sending gossip to RM 1. ReplicaTS: [2, 0]
+INFO - RM 1: Got gossip from RM 0
+INFO - RM 1: Sending gossip to RM 0. ReplicaTS: [2, 1]
 INFO - RM 0: Got gossip from RM 1
-DEBUG - RM 0: Merged time stamp from RM 1: [1, 1]
-INFO - RM 0: Sending gossip to RM 1
+INFO - RM 0: Sending gossip to RM 1. ReplicaTS: [3, 1]
+INFO - FE 3: Sending message (ID: 5763be6b-750a-4dd7-92de-2438f2824a01) to RM 1
+INFO - FE 2: Sending message (ID: c4367517-5ff1-45b5-b49d-13171a16d6ea) to RM 0
 INFO - RM 1: Got gossip from RM 0
-DEBUG - RM 1: Merged time stamp from RM 0: [2, 1]
+INFO - RM 0: Got update from FE 2. Message-ID: c4367517-5ff1-45b5-b49d-13171a16d6ea.
+INFO - RM 0: Set new unique TS [4, 0] for update.
+INFO - RM 0: Got update, informed FE 2: [4, 0]
+INFO - RM 0: Inserted Message (ID c4367517-5ff1-45b5-b49d-13171a16d6ea) to Value-Log.
+INFO - RM 0: Set new valueTS: [0, 0]. Based on old valueTS [0, 0] and u.TS [0, 0]
+INFO - RM 1: Got update from FE 3. Message-ID: 5763be6b-750a-4dd7-92de-2438f2824a01.
+INFO - RM 1: Set new unique TS [0, 2] for update.
+INFO - RM 1: Got update, informed FE 3: [0, 2]
+INFO - RM 1: Inserted Message (ID 5763be6b-750a-4dd7-92de-2438f2824a01) to Value-Log.
+INFO - RM 1: Set new valueTS: [0, 0]. Based on old valueTS [0, 0] and u.TS [0, 0]
+INFO - FE 2: Got answer from RM 0: [4, 0]
+INFO - FE 3: Got answer from RM 1: [0, 2]
+INFO - RM 0: Sending gossip to RM 1. ReplicaTS: [5, 1]
+INFO - RM 1: Got gossip from RM 0
+INFO - RM 1: Inserted Message (ID 5763be6b-750a-4dd7-92de-2438f2824a01) to Value-Log.
+INFO - RM 1: Set new valueTS: [0, 0]. Based on old valueTS [0, 0] and u.TS [0, 0]
+INFO - RM 1: Inserted Message (ID c4367517-5ff1-45b5-b49d-13171a16d6ea) to Value-Log.
+INFO - RM 1: Set new valueTS: [0, 0]. Based on old valueTS [0, 0] and u.TS [0, 0]
+INFO - RM 1: Sending gossip to RM 0. ReplicaTS: [5, 3]
+INFO - RM 1: Sending gossip to RM 0. ReplicaTS: [5, 4]
 INFO - RM 0: Got gossip from RM 1
-DEBUG - RM 0: Merged time stamp from RM 1: [2, 2]
-INFO - RM 1: Sending gossip to RM 0
-INFO - RM 0: Sending gossip to RM 1
-INFO - RM 1: Got gossip from RM 0
-DEBUG - RM 1: Merged time stamp from RM 0: [3, 2]
+INFO - RM 0: Inserted Message (ID c4367517-5ff1-45b5-b49d-13171a16d6ea) to Value-Log.
+INFO - RM 0: Set new valueTS: [0, 0]. Based on old valueTS [0, 0] and u.TS [0, 0]
+INFO - RM 0: Inserted Message (ID 5763be6b-750a-4dd7-92de-2438f2824a01) to Value-Log.
+INFO - RM 0: Set new valueTS: [0, 0]. Based on old valueTS [0, 0] and u.TS [0, 0]
 INFO - RM 0: Got gossip from RM 1
-DEBUG - RM 0: Merged time stamp from RM 1: [3, 3]
-INFO - RM 1: Sending gossip to RM 0
-INFO - FE 2: Sending query (ID: 77e5eb01-1d9c-40fd-8315-94eb6f7681f5) to RM 0
-INFO - FE 3: Sending query (ID: 158bc480-f919-4dfb-a0b1-36d4b72fa2e4) to RM 1
-INFO - RM 0: Got query from FE 2. Message-ID: 77e5eb01-1d9c-40fd-8315-94eb6f7681f5.
-INFO - RM 1: Got query from FE 3. Message-ID: 158bc480-f919-4dfb-a0b1-36d4b72fa2e4.
-INFO - RM 0: Made query, informed FE 2: [0, 0]
-INFO - RM 1: Made query, informed FE 3: [0, 0]
-INFO - FE 3: Got query-answer from RM 1: [0, 0]
-DEBUG - FE 3: Merged time stamp from RM 1: [0, 0]
-INFO - FE 2: Got query-answer from RM 0: [0, 0]
-DEBUG - FE 2: Merged time stamp from RM 0: [0, 0]
-INFO - RM 0: Sending gossip to RM 1
-INFO - RM 0: Sending gossip to RM 1
+INFO - RM 0: Sending gossip to RM 1. ReplicaTS: [6, 4]
 INFO - RM 1: Got gossip from RM 0
-DEBUG - RM 1: Merged time stamp from RM 0: [4, 3]
+INFO - RM 0: Sending gossip to RM 1. ReplicaTS: [7, 4]
+INFO - FE 2: Sending message (ID: 4a59386c-792b-4aba-9141-a1cf9403f5ce) to RM 0
+INFO - RM 0: Got update from FE 2. Message-ID: 4a59386c-792b-4aba-9141-a1cf9403f5ce.
+INFO - RM 0: Set new unique TS [8, 0] for update.
+INFO - FE 3: Sending query (ID: 498cde29-d82f-4ebb-9260-ee11280a90dd) to RM 1
+INFO - RM 0: Got update, informed FE 2: [8, 0]
+INFO - FE 2: Sending query (ID: 0669f0c5-7443-4066-97d1-8a98eda07d42) to RM 0
 INFO - RM 1: Got gossip from RM 0
-DEBUG - RM 1: Merged time stamp from RM 0: [5, 3]
-INFO - RM 0: Sending gossip to RM 1
+INFO - RM 0: Got query from FE 2. Message-ID: 0669f0c5-7443-4066-97d1-8a98eda07d42.
+INFO - RM 0: Not ready for query 0669f0c5-7443-4066-97d1-8a98eda07d42 yet. Queued.
+INFO - FE 2: Got answer from RM 0: [8, 0]
+INFO - RM 1: Got query from FE 3. Message-ID: 498cde29-d82f-4ebb-9260-ee11280a90dd.
+INFO - RM 1: Not ready for query 498cde29-d82f-4ebb-9260-ee11280a90dd yet. Queued.
+INFO - RM 0: Sending gossip to RM 1. ReplicaTS: [9, 4]
 INFO - RM 1: Got gossip from RM 0
-DEBUG - RM 1: Merged time stamp from RM 0: [6, 3]
-INFO - RM 1: Sending gossip to RM 0
+INFO - RM 1: Inserted Message (ID 5763be6b-750a-4dd7-92de-2438f2824a01) to Value-Log.
+INFO - RM 1: Set new valueTS: [0, 0]. Based on old valueTS [0, 0] and u.TS [0, 0]
+INFO - RM 1: Inserted Message (ID c4367517-5ff1-45b5-b49d-13171a16d6ea) to Value-Log.
+INFO - RM 1: Set new valueTS: [0, 0]. Based on old valueTS [0, 0] and u.TS [0, 0]
+INFO - RM 1: Inserted Message (ID 4a59386c-792b-4aba-9141-a1cf9403f5ce) to Value-Log.
+INFO - RM 1: Set new valueTS: [4, 0]. Based on old valueTS [0, 0] and u.TS [4, 0]
+INFO - RM 1: Sending gossip to RM 0. ReplicaTS: [9, 5]
 INFO - RM 0: Got gossip from RM 1
-DEBUG - RM 0: Merged time stamp from RM 1: [6, 4]
-INFO - RM 0: Sending gossip to RM 1
+INFO - RM 0: Sending gossip to RM 1. ReplicaTS: [10, 5]
 INFO - RM 1: Got gossip from RM 0
-DEBUG - RM 1: Merged time stamp from RM 0: [7, 4]
-INFO - RM 0: Got query from FE 2. Message-ID: a04e4651-fec9-4afd-9114-095014fef5f8.
-INFO - FE 2: Sending query (ID: a04e4651-fec9-4afd-9114-095014fef5f8) to RM 0
-INFO - RM 1: Sending gossip to RM 0
-INFO - RM 0: Made query, informed FE 2: [0, 0]
-INFO - RM 1: Sending gossip to RM 0
-INFO - RM 1: Sending gossip to RM 0
-INFO - FE 3: Sending message (ID: 6290ce52-93dd-4f75-84f8-fdfa1615a227) to RM 1
+INFO - RM 0: Sending gossip to RM 1. ReplicaTS: [11, 5]
+INFO - RM 1: Got gossip from RM 0
+INFO - RM 0: Got query from FE 2. Message-ID: 12784885-cb12-46b4-89ee-61e4a5299263.
+INFO - RM 0: Not ready for query 12784885-cb12-46b4-89ee-61e4a5299263 yet. Queued.
+INFO - FE 2: Sending query (ID: 12784885-cb12-46b4-89ee-61e4a5299263) to RM 0
+INFO - RM 0: Got update from FE 2. Message-ID: 2ca3070a-5b38-415c-ae55-57e51f4bfe0d.
+INFO - RM 0: Set new unique TS [12, 0] for update.
+INFO - FE 2: Sending message (ID: 2ca3070a-5b38-415c-ae55-57e51f4bfe0d) to RM 0
+INFO - RM 0: Got update, informed FE 2: [12, 0]
+INFO - FE 3: Sending message (ID: c0f25833-66ea-4331-bb6f-ec611d43dcab) to RM 1
+INFO - RM 1: Got update from FE 3. Message-ID: c0f25833-66ea-4331-bb6f-ec611d43dcab.
+INFO - RM 1: Set new unique TS [0, 6] for update.
+INFO - RM 1: Got update, informed FE 3: [0, 6]
+INFO - FE 3: Got answer from RM 1: [0, 6]
+INFO - FE 2: Got answer from RM 0: [12, 0]
+INFO - RM 0: Sending gossip to RM 1. ReplicaTS: [13, 5]
+INFO - RM 1: Got gossip from RM 0
+INFO - RM 1: Inserted Message (ID 5763be6b-750a-4dd7-92de-2438f2824a01) to Value-Log.
+INFO - RM 1: Set new valueTS: [4, 0]. Based on old valueTS [4, 0] and u.TS [0, 0]
+INFO - RM 1: Inserted Message (ID c4367517-5ff1-45b5-b49d-13171a16d6ea) to Value-Log.
+INFO - RM 1: Set new valueTS: [4, 0]. Based on old valueTS [4, 0] and u.TS [0, 0]
+INFO - RM 1: Inserted Message (ID 4a59386c-792b-4aba-9141-a1cf9403f5ce) to Value-Log.
+INFO - RM 1: Set new valueTS: [4, 0]. Based on old valueTS [4, 0] and u.TS [4, 0]
+INFO - RM 1: Inserted Message (ID c0f25833-66ea-4331-bb6f-ec611d43dcab) to Value-Log.
+INFO - RM 1: Set new valueTS: [4, 2]. Based on old valueTS [4, 0] and u.TS [0, 2]
+INFO - RM 1: Inserted Message (ID 2ca3070a-5b38-415c-ae55-57e51f4bfe0d) to Value-Log.
+INFO - RM 1: Set new valueTS: [8, 2]. Based on old valueTS [4, 2] and u.TS [8, 0]
+INFO - RM 1: Made query, informed FE 3: [8, 2]
+INFO - FE 3: Got query-answer from RM 1: [8, 2]
+INFO - RM 0: Sending gossip to RM 1. ReplicaTS: [14, 5]
+INFO - RM 1: Got gossip from RM 0
+INFO - RM 1: Sending gossip to RM 0. ReplicaTS: [14, 7]
 INFO - RM 0: Got gossip from RM 1
-INFO - FE 2: Got query-answer from RM 0: [0, 0]
-DEBUG - RM 0: Merged time stamp from RM 1: [7, 5]
-DEBUG - FE 2: Merged time stamp from RM 0: [0, 0]
-INFO - RM 1: Got update from FE 3. Message-ID: 6290ce52-93dd-4f75-84f8-fdfa1615a227.
-INFO - RM 1: Set new TS: [0, 8].
-INFO - RM 0: Got gossip from RM 1
-DEBUG - RM 0: Merged time stamp from RM 1: [7, 6]
-INFO - RM 1: Got update, informed FE 3: [0, 8]
-INFO - RM 1: Inserted Message (ID 6290ce52-93dd-4f75-84f8-fdfa1615a227) to Value-Log.
-INFO - FE 3: Got answer from RM 1: [0, 8]
-INFO - RM 0: Got gossip from RM 1
-DEBUG - RM 0: Merged time stamp from RM 1: [7, 7]
-DEBUG - FE 3: Merged time stamp from RM 1: [0, 8]
-INFO - RM 0: Sending gossip to RM 1
+INFO - RM 0: Inserted Message (ID c4367517-5ff1-45b5-b49d-13171a16d6ea) to Value-Log.
+INFO - RM 0: Set new valueTS: [0, 0]. Based on old valueTS [0, 0] and u.TS [0, 0]
+INFO - RM 0: Inserted Message (ID 5763be6b-750a-4dd7-92de-2438f2824a01) to Value-Log.
+INFO - RM 0: Set new valueTS: [0, 0]. Based on old valueTS [0, 0] and u.TS [0, 0]
+INFO - RM 0: Inserted Message (ID 4a59386c-792b-4aba-9141-a1cf9403f5ce) to Value-Log.
+INFO - RM 0: Set new valueTS: [4, 0]. Based on old valueTS [0, 0] and u.TS [4, 0]
+INFO - RM 0: Inserted Message (ID 2ca3070a-5b38-415c-ae55-57e51f4bfe0d) to Value-Log.
+INFO - RM 0: Set new valueTS: [8, 0]. Based on old valueTS [4, 0] and u.TS [8, 0]
+INFO - RM 0: Inserted Message (ID c0f25833-66ea-4331-bb6f-ec611d43dcab) to Value-Log.
+INFO - RM 0: Set new valueTS: [8, 2]. Based on old valueTS [8, 0] and u.TS [0, 2]
+INFO - RM 0: Made query, informed FE 2: [8, 2]
+INFO - RM 0: Made query, informed FE 2: [8, 2]
+INFO - FE 2: Got query-answer from RM 0: [8, 2]
+INFO - FE 2: Got query-answer from RM 0: [8, 2]
+INFO - RM 0: Sending gossip to RM 1. ReplicaTS: [15, 7]
+INFO - FE 3: Sending message (ID: b01b4bb8-3393-4f28-987c-661c6eaaed69) to RM 1
+INFO - FE 2: Sending message (ID: b1ee74a3-6d50-422a-a8ce-cd3367442eec) to RM 0
 INFO - RM 1: Got gossip from RM 0
-DEBUG - RM 1: Merged time stamp from RM 0: [8, 8]
-INFO - RM 1: Sending gossip to RM 0
-INFO - RM 0: Got gossip from RM 1
-DEBUG - RM 0: Added Message 6290ce52-93dd-4f75-84f8-fdfa1615a227 to update-log
-DEBUG - RM 0: Merged time stamp from RM 1: [8, 9]
-INFO - RM 0: Inserted Message (ID 6290ce52-93dd-4f75-84f8-fdfa1615a227) to Value-Log.
-INFO - RM 1: Sending gossip to RM 0
-INFO - RM 0: Got gossip from RM 1
-DEBUG - RM 0: Merged time stamp from RM 1: [8, 10]
-INFO - RM 0: Sending gossip to RM 1
-INFO - RM 0: Got query from FE 2. Message-ID: 4f7d365d-5edb-4686-8292-c139365de5d0.
-INFO - FE 2: Sending query (ID: 4f7d365d-5edb-4686-8292-c139365de5d0) to RM 0
-INFO - RM 1: Got gossip from RM 0
-DEBUG - RM 1: Merged time stamp from RM 0: [9, 10]
-INFO - FE 3: Sending query (ID: 26fef447-2148-4680-b70b-b70d7105f020) to RM 1
-INFO - RM 0: Made query, informed FE 2: [0, 0]
-INFO - RM 1: Got query from FE 3. Message-ID: 26fef447-2148-4680-b70b-b70d7105f020.
-INFO - FE 2: Got query-answer from RM 0: [0, 0]
-DEBUG - FE 2: Merged time stamp from RM 0: [0, 0]
-INFO - RM 1: Not ready for query 3 yet. Queued.
-INFO - RM 0: Sending gossip to RM 1
-INFO - RM 1: Got gossip from RM 0
-DEBUG - RM 1: Merged time stamp from RM 0: [10, 10]
-INFO - RM 1: Sending gossip to RM 0
-INFO - RM 0: Got gossip from RM 1
-DEBUG - RM 0: Merged time stamp from RM 1: [10, 11]
-INFO - RM 0: Sending gossip to RM 1
-INFO - RM 1: Got gossip from RM 0
-DEBUG - RM 1: Merged time stamp from RM 0: [11, 11]
-INFO - RM 0: Sending gossip to RM 1
-INFO - RM 0: Sending gossip to RM 1
-DEBUG - RM 0 - executed messages:	TS: [0, 0]; UUID: 6290ce52-93dd-4f75-84f8-fdfa1615a227
-INFO - RM 1: Got gossip from RM 0
-DEBUG - RM 1: Merged time stamp from RM 0: [12, 11]
-INFO - FE 2: Sending query (ID: cd910329-fb51-438d-a5f5-028aa4f9c7e6) to RM 0
-DEBUG - FE 2 - sent messages:	To RM: 0; TS: [0, 0]; UUID: 77e5eb01-1d9c-40fd-8315-94eb6f7681f5
-DEBUG - FE 2 - sent messages:	To RM: 0; TS: [0, 0]; UUID: a04e4651-fec9-4afd-9114-095014fef5f8
-DEBUG - FE 2 - sent messages:	To RM: 0; TS: [0, 0]; UUID: 4f7d365d-5edb-4686-8292-c139365de5d0
-DEBUG - FE 2 - sent messages:	To RM: 0; TS: [0, 0]; UUID: cd910329-fb51-438d-a5f5-028aa4f9c7e6
-INFO - RM 1: Got gossip from RM 0
-DEBUG - RM 1: Merged time stamp from RM 0: [13, 11]
-INFO - FE 3: Sending query (ID: 7fc58a00-fea1-4e5f-bdd3-169c62cdb5d1) to RM 1
-DEBUG - RM 1 - executed messages:	TS: [0, 0]; UUID: 6290ce52-93dd-4f75-84f8-fdfa1615a227
-INFO - FE 3: Sending message (ID: a8520c8d-e1b5-41b5-8062-03bcba4df659) to RM 1
-DEBUG - FE 3 - sent messages:	To RM: 1; TS: [0, 0]; UUID: 158bc480-f919-4dfb-a0b1-36d4b72fa2e4
-DEBUG - FE 3 - sent messages:	To RM: 1; TS: [0, 0]; UUID: 6290ce52-93dd-4f75-84f8-fdfa1615a227
-DEBUG - FE 3 - sent messages:	To RM: 1; TS: [0, 8]; UUID: 26fef447-2148-4680-b70b-b70d7105f020
-DEBUG - FE 3 - sent messages:	To RM: 1; TS: [0, 8]; UUID: 7fc58a00-fea1-4e5f-bdd3-169c62cdb5d1
-DEBUG - FE 3 - sent messages:	To RM: 1; TS: [0, 8]; UUID: a8520c8d-e1b5-41b5-8062-03bcba4df659
